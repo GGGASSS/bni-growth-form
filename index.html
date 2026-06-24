@@ -31,17 +31,23 @@
                 <div class="subtitle">GROWTH Connect Form</div>
                 <p style="margin-top:15px; font-size:14px; color:#555;">ขอเชิญสมาชิกทุกท่านร่วมกรอกข้อมูลเป้าหมายและแผนงานยอดธุรกิจใน Supreme (Goal) เพื่อใช้วางแผนร่วมกันในทีม</p>
             </div>
-            <div class="form-group"><label>ชื่อ-นามสกุล ภาษาอังกฤษ *</label><input type="text" name="fullName" id="fullName" placeholder="Somchai Jaidee" required></div>
-            <div class="form-group"><label>ชื่อเล่น *</label><input type="text" name="nickname" id="nickname" placeholder="เช่น แก๊ส" required></div>
+            <div class="form-group"><label>ชื่อ-นามสกุล ภาษาอังกฤษ *</label><input type="text" name="fullName" required></div>
+            <div class="form-group"><label>ชื่อเล่น *</label><input type="text" name="nickname" required></div>
             <div class="form-group"><label>Power Team ปัจจุบัน *</label>
-                <select name="powerTeam" id="powerTeam" required>
-                    <option value="">เลือก Power Team ของคุณ...</option>
-                    <option value="FACTORY">FACTORY</option><option value="HORECA">HORECA</option><option value="LONGEVITY">LONGEVITY</option>
-                    <option value="HOSPITAL">HOSPITAL</option><option value="HI Way">HI Way</option><option value="Well Being">Well Being</option>
+                <select name="powerTeam" required>
+                    <option value="">เลือก Power Team...</option>
+                    <option value="FACTORY">FACTORY</option>
+                    <option value="HORECA">HORECA</option>
+                    <option value="LONGEVITY">LONGEVITY</option>
+                    <option value="HOSPITAL">HOSPITAL</option>
+                    <option value="HI Way">HI Way</option>
+                    <option value="Well Being">Well Being</option>
+                    <option value="None">None</option>
+                    <option value="8 Weeks">8 Weeks</option>
                 </select>
             </div>
-            <div class="form-group"><label>ยอดธุรกิจที่ต้องการใน Supreme (Goal) *</label><input type="text" name="goalAmount" id="goalAmount" placeholder="เช่น 1,000,000" required></div>
-            <div class="form-group"><label>Looking for / ลูกค้าที่ได้ยอดมากที่สุด *</label><input type="text" name="lookingFor" id="lookingFor" placeholder="เช่น Fulfillment คลังสินค้า" required></div>
+            <div class="form-group"><label>ยอดธุรกิจที่ต้องการใน Supreme (Goal) *</label><input type="text" name="goalAmount" required></div>
+            <div class="form-group"><label>Looking for / ลูกค้าที่ได้ยอดมากที่สุด *</label><input type="text" name="lookingFor" required></div>
             <button type="submit" class="btn-submit" id="submitBtn">บันทึกข้อมูล</button>
             <button type="button" class="btn-share" onclick="shareFlexMessage()">ส่งการ์ดฟอร์มเข้ากลุ่ม LINE</button>
         </form>
@@ -54,7 +60,6 @@
     <script>
         const LIFF_ID = "2010503081-el7huAKt";
         const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzBY27_E-A12L9pOWZJlYXoven7ybsoYci4KqAXKRc1viBqPt8iAG_HLl9XJe4l6fHa9g/exec";
-
         liff.init({ liffId: LIFF_ID });
 
         function shareFlexMessage() {
@@ -78,7 +83,7 @@
             const btn = document.getElementById('submitBtn');
             btn.innerText = "กำลังบันทึก...";
             fetch(SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new FormData(this) })
-            .then(() => { alert("บันทึกเรียบร้อย!"); btn.innerText = "บันทึกข้อมูล"; location.reload(); })
+            .then(() => { alert("บันทึกเรียบร้อย!"); location.reload(); })
             .catch(() => { alert("เกิดข้อผิดพลาด"); btn.innerText = "บันทึกข้อมูล"; });
         });
     </script>

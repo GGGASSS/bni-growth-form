@@ -1,25 +1,43 @@
+---
+layout: null
+---
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNI SUPREME - GROWTH Connect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
-        body { font-family: sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; padding: 20px; }
-        .card { background: white; width: 100%; max-width: 500px; padding: 40px; border-radius: 16px; border-top: 6px solid #9E1B22; }
-        .group { margin-bottom: 20px; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8F9FA; min-height: 100vh; display: flex; justify-content: center; padding: 20px; }
+        .form-card { background: #FFFFFF; width: 100%; max-width: 580px; padding: 45px 35px; border-radius: 16px; border-top: 6px solid #9E1B22; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .logo-area { font-size: 32px; font-weight: 700; color: #9E1B22; text-transform: uppercase; letter-spacing: 1.5px; }
+        .subtitle { font-size: 15px; color: #6C757D; margin-top: 5px; font-weight: 500; }
+        .form-group { margin-bottom: 24px; }
+        label { display: block; font-weight: 600; margin-bottom: 10px; color: #343A40; }
+        input, select { width: 100%; padding: 14px; border: 1px solid #CED4DA; border-radius: 10px; font-size: 16px; }
+        .btn-submit { width: 100%; padding: 16px; background: #9E1B22; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 18px; }
+        footer { margin-top: 40px; text-align: center; border-top: 1px dashed #E9ECEF; padding-top: 25px; }
+        .powered-by { font-size: 18px; text-transform: uppercase; letter-spacing: 2px; color: #495057; margin-bottom: 6px; font-weight: 600; }
+        .brand-name { color: #9E1B22; font-weight: 800; }
     </style>
 </head>
 <body>
-    <div class="card">
+    <div class="form-card">
         <form id="bniGrowthForm">
-            <h2 style="text-align:center;">BNI SUPREME</h2>
-            <div class="group"><label>ชื่อ-นามสกุล</label><input type="text" name="fullName" required></div>
-            <div class="group"><label>ชื่อเล่น</label><input type="text" name="nickname" required></div>
-            <div class="group"><label>Power Team</label>
+            <div class="header-section">
+                <div class="logo-area">BNI SUPREME</div>
+                <div class="subtitle">GROWTH Connect Form</div>
+                <p style="margin-top:15px; font-size:14px; color:#555;">ขอเชิญสมาชิกทุกท่านร่วมกรอกข้อมูลเป้าหมายและแผนงานยอดธุรกิจใน Supreme (Goal) เพื่อใช้วางแผนร่วมกันในทีม</p>
+            </div>
+            <div class="form-group"><label>ชื่อ-นามสกุล ภาษาอังกฤษ *</label><input type="text" name="fullName" required></div>
+            <div class="form-group"><label>ชื่อเล่น *</label><input type="text" name="nickname" required></div>
+            <div class="form-group"><label>Power Team ปัจจุบัน *</label>
                 <select name="powerTeam" required>
-                    <option value="">เลือก...</option>
+                    <option value="">เลือก Power Team...</option>
                     <option value="FACTORY">FACTORY</option>
                     <option value="HORECA">HORECA</option>
                     <option value="LONGEVITY">LONGEVITY</option>
@@ -30,17 +48,24 @@
                     <option value="8 Weeks">8 Weeks</option>
                 </select>
             </div>
-            <div class="group"><label>ยอดเป้าหมาย</label><input type="text" name="goalAmount" required></div>
-            <div class="group"><label>Looking for</label><input type="text" name="lookingFor" required></div>
-            <button type="submit" style="width:100%; padding:15px; background:#9E1B22; color:white; border:none; border-radius:8px;">บันทึกข้อมูล</button>
+            <div class="form-group"><label>ยอดธุรกิจที่ต้องการใน Supreme (Goal) *</label><input type="text" name="goalAmount" required></div>
+            <div class="form-group"><label>Looking for / ลูกค้าที่ได้ยอดมากที่สุด *</label><input type="text" name="lookingFor" required></div>
+            <button type="submit" class="btn-submit" id="submitBtn">บันทึกข้อมูล</button>
         </form>
+        <footer>
+            <div class="powered-by">POWERED BY · <span class="brand-name">BARIGAN</span></div>
+            <div style="font-size:13px; color:#ADB5BD;">ติดต่อทำฟอร์มของท่าน · Email: info@barigan.com</div>
+        </footer>
     </div>
     <script>
         const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzBY27_E-A12L9pOWZJlYXoven7ybsoYci4KqAXKRc1viBqPt8iAG_HLl9XJe4l6fHa9g/exec";
         document.getElementById('bniGrowthForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "กำลังบันทึก...";
             fetch(SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new FormData(this) })
-            .then(() => alert("บันทึกแล้ว")).catch(() => alert("ผิดพลาด"));
+            .then(() => { alert("บันทึกเรียบร้อย!"); location.reload(); })
+            .catch(() => { alert("ผิดพลาด"); btn.innerText = "บันทึกข้อมูล"; });
         });
     </script>
 </body>

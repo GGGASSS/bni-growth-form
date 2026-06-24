@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BNI SUPREME - GROWTH Connect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', 'Chakra Petch', sans-serif; background-color: #F8F9FA; color: #212529; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding: 0; }
+        .container { width: 100%; max-width: 580px; }
+        .form-card { background: #FFFFFF; border-top: 6px solid #9E1B22; min-height: 100vh; padding: 35px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: relative; display: flex; flex-direction: column; }
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .logo-area { font-size: 32px; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 6px; color: #9E1B22; text-transform: uppercase; }
+        .subtitle { font-size: 15px; color: #6C757D; letter-spacing: 0.5px; font-weight: 500; }
+        .form-group { margin-bottom: 24px; position: relative; }
+        label { display: block; font-size: 16px; font-weight: 600; margin-bottom: 10px; color: #343A40; }
+        label span { color: #9E1B22; margin-left: 3px; }
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+        input[type="text"], select { width: 100%; padding: 14px 16px; background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 10px; color: #212529; font-size: 16px; font-family: inherit; transition: all 0.2s ease; outline: none; -webkit-appearance: none; }
+        input[type="text"]:focus, select:focus { border-color: #9E1B22; box-shadow: 0 0 0 3px rgba(158, 27, 34, 0.15); }
+        .goal-wrapper input { padding-right: 65px; font-weight: 600; color: #9E1B22; font-size: 18px; }
+        .currency-suffix { position: absolute; right: 16px; font-size: 14px; font-weight: 700; color: #495057; pointer-events: none; }
+        select { cursor: pointer; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 16px center; background-size: 16px; padding-right: 45px; }
+        .btn-submit { width: 100%; padding: 16px; background: #9E1B22; border: none; border-radius: 10px; color: #FFFFFF; font-size: 18px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-top: 10px; box-shadow: 0 4px 12px rgba(158, 27, 34, 0.2); }
+        .btn-share-liff { width: 100%; padding: 14px; background: #2ecc71; border: none; border-radius: 10px; color: #FFFFFF; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-top: 15px; display: block; text-align: center; box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2); }
+        .success-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #FFFFFF; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 10; padding: 20px; text-align: center; }
+        .success-overlay.active { opacity: 1; pointer-events: auto; }
+        .success-icon { width: 72px; height: 72px; background: rgba(46, 204, 113, 0.1); border: 2px solid #2ecc71; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; color: #2ecc71; font-size: 32px; }
+        .success-title { font-size: 24px; font-weight: 600; color: #212529; margin-bottom: 12px; }
+        .success-msg { font-size: 16px; color: #6C757D; margin-bottom: 25px; line-height: 1.5; }
+        .btn-back { background: #F8F9FA; border: 1px solid #DEE2E6; color: #495057; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; margin: 5px; }
+        footer { margin-top: auto; border-top: 1px dashed #E9ECEF; padding-top: 25px; text-align: center; width: 100%; }
+        .powered-by { font-size: 18px; text-transform: uppercase; letter-spacing: 2px; color: #495057; margin-bottom: 6px; font-weight: 600; }
+        .brand-name { font-weight: 800; color: #9E1B22; }
+        .contact-link { font-size: 13px; color: #ADB5BD; text-decoration: none; font-weight: 500; }
+        @media (min-width: 480px) { body { padding: 30px 15px; } .form-card { min-height: auto; border-radius: 16px; padding: 45px 35px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <div class="success-overlay" id="successOverlay">
+                <div class="success-icon">✓</div>
+                <div class="success-title">ส่งข้อมูลเรียบร้อยแล้ว</div>
+                <div class="success-msg">ระบบได้ทำการบันทึกข้อมูลเป้าหมายและแผนงานของคุณเรียบร้อยแล้ว</div>
+                <button class="btn-back" onclick="resetForm()">กรอกฟอร์มใหม่</button>
+            </div>
+            <div class="header-section">
+                <div class="logo-area">BNI SUPREME</div>
+                <div class="subtitle">GROWTH Connect Form</div>
+            </div>
+            <form id="bniGrowthForm" autocomplete="off">
+                <div class="form-group">
+                    <label>ชื่อ-นามสกุล ภาษาอังกฤษ <span>*</span></label>
+                    <input type="text" id="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label>ชื่อเล่น <span>*</span></label>
+                    <input type="text" id="nickname" required>
+                </div>
+                <div class="form-group">
+                    <label>Power Team ปัจจุบัน <span>*</span></label>
+                    <select id="powerTeam" required>
+                        <option value="" disabled selected hidden>เลือก Power Team...</option>
+                        <option value="FACTORY">FACTORY</option>
+                        <option value="HORECA">HORECA</option>
+                        <option value="LONGEVITY">LONGEVITY</option>
+                        <option value="HOSPITAL">HOSPITAL</option>
+                        <option value="HI Way">HI Way</option>
+                        <option value="Well Being">Well Being</option>
+                        <option value="CONTRACTOR">CONTRACTOR</option>
+                        <option value="8 week">8 week</option>
+                        <option value="None">None</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ยอดธุรกิจที่ต้องการใน Supreme (Goal) <span>*</span></label>
+                    <div class="input-wrapper goal-wrapper">
+                        <input type="text" id="goalAmount" required>
+                        <span class="currency-suffix">THB</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Looking for / ลูกค้าที่ได้ยอดมากที่สุด <span>*</span></label>
+                    <input type="text" id="lookingFor" required>
+                </div>
+                <button type="submit" class="btn-submit" id="submitBtn">บันทึกข้อมูล</button>
+                <button type="button" class="btn-share-liff" onclick="shareFlexMessage()">ส่งการ์ดฟอร์มนี้เข้ากลุ่ม LINE</button>
+            </form>
+            
+            <footer>
+                <div class="powered-by">POWERED BY · <span class="brand-name">BARIGAN</span></div>
+                <a href="mailto:info@barigan.com" class="contact-link">ติดต่อทำฟอร์มของท่าน · Email: info@barigan.com</a>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const LIFF_ID = "2010503081-el7huAKt";
+        // นี่คือลิงก์ Google Script เดิมของพี่ที่เอาไว้รับข้อมูลลง Sheet ไม่ต้องแก้ครับ
+        const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzBY27_E-A12L9pOWZJlYXoven7ybsoYci4KqAXKRc1viBqPt8iAG_HLl9XJe4l6fHa9g/exec";
+
+        const goalInput = document.getElementById('goalAmount');
+        const form = document.getElementById('bniGrowthForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successOverlay = document.getElementById('successOverlay');
+
+        async function initLiff() {
+            try {
+                await liff.init({ liffId: LIFF_ID });
+                if (!liff.isLoggedIn()) { liff.login(); }
+            } catch (error) {
+                console.error("LIFF Init Error", error);
+            }
+        }
+        initLiff();
+
+        function shareFlexMessage() {
+            if (!liff.isLoggedIn()) {
+                liff.login();
+                return;
+            }
+            if (liff.isApiAvailable('shareTargetPicker')) {
+                liff.shareTargetPicker([
+                    {
+                        "type": "flex",
+                        "altText": "BNI SUPREME - GROWTH Connect Form",
+                        "contents": {
+                            "type": "bubble",
+                            "hero": {
+                                "type": "image",
+                                "url": "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1000&q=80",
+                                "size": "full",
+                                "aspectRatio": "20:10",
+                                "aspectMode": "cover"
+                            },
+                            "body": {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    { "type": "text", "text": "BNI SUPREME", "weight": "bold", "size": "xl", "color": "#9E1B22" },
+                                    { "type": "text", "text": "GROWTH Connect Form", "size": "sm", "color": "#666666", "margin": "xs" },
+                                    { "type": "text", "text": "ขอเชิญสมาชิกทุกท่านร่วมกรอกข้อมูลเป้าหมายและแผนงานยอดธุรกิจใน Supreme (Goal) เพื่อใช้วางแผนร่วมกันในทีม", "size": "sm", "color": "#333333", "margin": "md", "wrap": true }
+                                ]
+                            },
+                            "footer": {
+                                "type": "box",
+                                "layout": "vertical",
+                                "spacing": "sm",
+                                "contents": [
+                                    {
+                                        "type": "button",
+                                        "style": "primary",
+                                        "color": "#9E1B22",
+                                        "action": {
+                                            "type": "uri",
+                                            "label": "คลิกเพื่อกรอกฟอร์ม",
+                                            "uri": "https://liff.line.me/" + LIFF_ID
+                                        }
+                                    },
+                                    { "type": "text", "text": "POWERED BY BARIGAN", "size": "xxs", "color": "#aaaaaa", "align": "center", "margin": "xs" }
+                                ]
+                            }
+                        }
+                    }
+                ]).then((res) => {
+                    if(res) console.log("Shared successfully");
+                }).catch((error) => {
+                    alert("แชร์ไม่ได้ครับ กรุณาเปิดจากในแอป LINE");
+                });
+            }
+        }
+
+        goalInput.addEventListener('input', function(e) {
+            let cursorPosition = this.selectionStart;
+            let value = this.value.replace(/[^0-9]/g, '');
+            if (value === "") { this.value = ""; return; }
+            let originalLength = this.value.length;
+            let formattedValue = Number(value).toLocaleString('en-US');
+            this.value = formattedValue;
+            let newLength = formattedValue.length;
+            cursorPosition = cursorPosition + (newLength - originalLength);
+            this.setSelectionRange(cursorPosition, cursorPosition);
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.innerText = "กำลังบันทึกข้อมูล...";
+            const formData = new URLSearchParams();
+            formData.append('fullName', document.getElementById('fullName').value.trim());
+            formData.append('nickname', document.getElementById('nickname').value.trim());
+            formData.append('powerTeam', document.getElementById('powerTeam').value);
+            formData.append('goalAmount', goalInput.value.replace(/,/g, ''));
+            formData.append('lookingFor', document.getElementById('lookingFor').value.trim());
+
+            fetch(SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', body: formData })
+            .then(() => successOverlay.classList.add('active'))
+            .catch(() => {
+                alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
+                submitBtn.disabled = false;
+                submitBtn.innerText = "บันทึกข้อมูล";
+            });
+        });
+
+        function resetForm() {
+            form.reset();
+            submitBtn.disabled = false;
+            submitBtn.innerText = "บันทึกข้อมูล";
+            successOverlay.classList.remove('active');
+        }
+    </script>
+</body>
+</html>

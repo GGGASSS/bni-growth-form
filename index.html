@@ -1,76 +1,85 @@
----
-layout: null
----
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BNI SUPREME - GROWTH Connect</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', 'Chakra Petch', sans-serif; background-color: #F8F9FA; color: #212529; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding: 0; }
+        body { font-family: 'Inter', 'Chakra Petch', sans-serif; background-color: #F8F9FA; color: #212529; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 580px; }
-        .form-card { background: #FFFFFF; border-top: 6px solid #9E1B22; min-height: 100vh; padding: 35px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: relative; display: flex; flex-direction: column; }
-        .header-section { text-align: center; margin-bottom: 30px; }
-        .logo-area { font-size: 32px; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 6px; color: #9E1B22; text-transform: uppercase; }
-        .subtitle { font-size: 15px; color: #6C757D; letter-spacing: 0.5px; font-weight: 500; }
-        .form-group { margin-bottom: 24px; position: relative; }
-        label { display: block; font-size: 16px; font-weight: 600; margin-bottom: 10px; color: #343A40; }
-        label span { color: #9E1B22; margin-left: 3px; }
+        .form-card { background: #FFFFFF; border-top: 6px solid #9E1B22; padding: 30px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: relative; }
+        
+        /* ปุ่มแชร์หน้าแรก */
+        .top-share-btn { width: 100%; background: #06C755; color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 25px; transition: 0.2s; }
+        .top-share-btn:hover { background: #05B34C; }
+        
+        .header-section { text-align: center; margin-bottom: 25px; }
+        .logo-area { font-size: 32px; font-weight: 700; color: #9E1B22; margin-bottom: 6px; }
+        .subtitle { font-size: 15px; color: #6C757D; font-weight: 500; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+        label span { color: #9E1B22; }
         .input-wrapper { position: relative; display: flex; align-items: center; }
-        input[type="text"], select { width: 100%; padding: 14px 16px; background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 10px; color: #212529; font-size: 16px; font-family: inherit; transition: all 0.2s ease; outline: none; -webkit-appearance: none; }
+        input[type="text"], select { width: 100%; padding: 14px; background: #FFFFFF; border: 1px solid #CED4DA; border-radius: 10px; font-size: 16px; font-family: inherit; outline: none; -webkit-appearance: none; }
         input[type="text"]:focus, select:focus { border-color: #9E1B22; box-shadow: 0 0 0 3px rgba(158, 27, 34, 0.15); }
         .goal-wrapper input { padding-right: 65px; font-weight: 600; color: #9E1B22; font-size: 18px; }
-        .currency-suffix { position: absolute; right: 16px; font-size: 14px; font-weight: 700; color: #495057; pointer-events: none; }
-        select { cursor: pointer; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 16px center; background-size: 16px; padding-right: 45px; }
-        .btn-submit { width: 100%; padding: 16px; background: #9E1B22; border: none; border-radius: 10px; color: #FFFFFF; font-size: 18px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-top: 10px; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(158, 27, 34, 0.2); }
-        .btn-submit:hover { background: #821319; }
+        .currency-suffix { position: absolute; right: 16px; font-size: 14px; font-weight: 700; color: #495057; }
         
-        .success-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #FFFFFF; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 10; padding: 20px; text-align: center; }
+        .btn-submit { width: 100%; padding: 16px; background: #9E1B22; border: none; border-radius: 10px; color: white; font-size: 18px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        
+        /* หน้า Success */
+        .success-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #FFFFFF; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 10; padding: 20px; text-align: center; }
         .success-overlay.active { opacity: 1; pointer-events: auto; }
         .success-icon { width: 72px; height: 72px; background: rgba(46, 204, 113, 0.1); border: 2px solid #2ecc71; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; color: #2ecc71; font-size: 32px; }
-        .success-title { font-size: 24px; font-weight: 600; color: #212529; margin-bottom: 12px; }
-        .success-msg { font-size: 16px; color: #6C757D; margin-bottom: 25px; line-height: 1.5; }
-        .btn-back { background: #F8F9FA; border: 1px solid #DEE2E6; color: #495057; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; transition: all 0.2s ease; margin: 5px; }
-        .btn-close-liff { background: #9E1B22; border: none; color: #FFFFFF; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; transition: all 0.2s ease; margin-top: 10px; display: inline-block; }
-        footer { margin-top: auto; border-top: 1px dashed #E9ECEF; padding-top: 25px; text-align: center; width: 100%; }
-        .powered-by { font-size: 18px; text-transform: uppercase; letter-spacing: 2px; color: #495057; margin-bottom: 6px; font-weight: 600; }
-        .brand-name { font-weight: 800; color: #9E1B22; }
-        .contact-link { font-size: 13px; color: #ADB5BD; text-decoration: none; font-weight: 500; }
-        @media (min-width: 480px) { body { padding: 30px 15px; } .form-card { min-height: auto; border-radius: 16px; padding: 45px 35px; } }
+        .btn-back { background: #F8F9FA; border: 1px solid #DEE2E6; padding: 12px 24px; border-radius: 8px; margin-top: 20px; font-weight: 500; cursor: pointer; }
+        
+        footer { margin-top: 30px; border-top: 1px dashed #E9ECEF; padding-top: 20px; text-align: center; }
+        .powered-by { font-size: 16px; color: #495057; font-weight: 600; }
+        .brand-name { color: #9E1B22; }
+        
+        @media (min-width: 480px) { body { padding: 30px 15px; } .form-card { border-radius: 16px; padding: 40px; } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="form-card">
+            
             <div class="success-overlay" id="successOverlay">
                 <div class="success-icon">✓</div>
-                <div class="success-title">ส่งข้อมูลเรียบร้อยแล้ว</div>
-                <div class="success-msg">ระบบได้ทำการบันทึกข้อมูลเป้าหมายและแผนงานของคุณเรียบร้อยแล้ว</div>
-                <button class="btn-back" onclick="resetForm()">กรอกฟอร์มใหม่</button>
-                <button class="btn-close-liff" id="closeLiffBtn" onclick="liff.closeWindow()">ปิดหน้าต่าง</button>
+                <h2>บันทึกข้อมูลสำเร็จ</h2>
+                <p style="color: #6C757D; margin: 15px 0;">ขอบคุณครับ ข้อมูลเป้าหมายของคุณถูกบันทึกเรียบร้อยแล้ว</p>
+                <button class="top-share-btn" onclick="shareFlexMsg()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                    แชร์การ์ดเชิญให้เพื่อน
+                </button>
+                <button class="btn-back" onclick="location.reload()">กรอกข้อมูลใหม่</button>
             </div>
+
+            <button class="top-share-btn" onclick="shareFlexMsg()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                ส่งต่อการ์ดเชิญให้เพื่อน (Flex)
+            </button>
+
             <div class="header-section">
                 <div class="logo-area">BNI SUPREME</div>
                 <div class="subtitle">GROWTH Connect Form</div>
             </div>
-            <form id="bniGrowthForm" autocomplete="off">
+            
+            <form id="bniGrowthForm">
                 <div class="form-group">
-                    <label for="fullName">ชื่อ-นามสกุล ภาษาอังกฤษ <span>*</span></label>
-                    <input type="text" id="fullName" name="fullName" placeholder="Somchai Jaidee" required pattern="^[A-Za-z ]+$" title="กรุณากรอกเฉพาะภาษาอังกฤษเท่านั้น">
+                    <label>ชื่อ-นามสกุล ภาษาอังกฤษ <span>*</span></label>
+                    <input type="text" id="fullName" name="fullName" required>
                 </div>
                 <div class="form-group">
-                    <label for="nickname">ชื่อเล่น <span>*</span></label>
-                    <input type="text" id="nickname" name="nickname" placeholder="เช่น แก๊ส" required>
+                    <label>ชื่อเล่น <span>*</span></label>
+                    <input type="text" id="nickname" name="nickname" required>
                 </div>
                 <div class="form-group">
-                    <label for="powerTeam">Power Team ปัจจุบัน <span>*</span></label>
+                    <label>Power Team ปัจจุบัน <span>*</span></label>
                     <select id="powerTeam" name="powerTeam" required>
                         <option value="" disabled selected hidden>เลือก Power Team ของคุณ...</option>
                         <option value="FACTORY">FACTORY</option>
@@ -85,94 +94,85 @@ layout: null
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="goalAmount">ยอดธุรกิจที่ต้องการใน Supreme (Goal) <span>*</span></label>
+                    <label>ยอดธุรกิจที่ต้องการใน Supreme (Goal) <span>*</span></label>
                     <div class="input-wrapper goal-wrapper">
-                        <input type="text" id="goalAmount" name="goalAmount" placeholder="เช่น 1,000,000" required>
+                        <input type="text" id="goalAmount" name="goalAmount" required>
                         <span class="currency-suffix">THB</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="lookingFor">Looking for / ลูกค้าที่ได้ยอดมากที่สุด <span>*</span></label>
-                    <input type="text" id="lookingFor" name="lookingFor" placeholder="เช่น Fulfillment คลังสินค้า" required>
+                    <label>Looking for / ลูกค้าที่ได้ยอดมากที่สุด <span>*</span></label>
+                    <input type="text" id="lookingFor" name="lookingFor" required>
                 </div>
                 <button type="submit" class="btn-submit" id="submitBtn">บันทึกข้อมูล</button>
             </form>
             
             <footer>
                 <div class="powered-by">POWERED BY · <span class="brand-name">BARIGAN</span></div>
-                <a href="mailto:info@barigan.com" class="contact-link">ติดต่อทำฟอร์มของท่าน · Email: info@barigan.com</a>
             </footer>
         </div>
     </div>
 
     <script>
+        // 1. ใส่ลิงก์ Google Script ของพี่แก๊ส (ที่ลงท้ายด้วย /exec)
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzBY27_E-A12L9pOWZJlYXoven7ybsoYci4KqAXKRc1viBqPt8iAG_HLl9XJe4l6fHa9g/exec";
+        
+        // 2. LIFF ID
         const LIFF_ID = "2010503081-el7huAKt";
-        const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzBY27_E-A12L9pOWZJlYXoven7ybsoYci4KqAXKRc1viBqPt8iAG_HLl9XJe4l6fHa9g/exec";
 
         const goalInput = document.getElementById('goalAmount');
         const form = document.getElementById('bniGrowthForm');
         const submitBtn = document.getElementById('submitBtn');
-        const successOverlay = document.getElementById('successOverlay');
-        const closeLiffBtn = document.getElementById('closeLiffBtn');
 
-        // เริ่มต้น LIFF พื้นฐานแบบไม่ต้องบังคับล็อกอิน
         async function initLiff() {
-            try {
-                await liff.init({ liffId: LIFF_ID });
-            } catch (error) {
-                console.error("LIFF Init Error", error);
-            }
+            await liff.init({ liffId: LIFF_ID });
+            if (!liff.isLoggedIn()) { liff.login(); }
         }
         initLiff();
 
-        function getRawNumber(value) { return value.replace(/,/g, ''); }
-
         goalInput.addEventListener('input', function(e) {
-            let cursorPosition = this.selectionStart;
-            let value = this.value.replace(/[^0-9]/g, '');
-            if (value === "") { this.value = ""; return; }
-            let originalLength = this.value.length;
-            let formattedValue = Number(value).toLocaleString('en-US');
-            this.value = formattedValue;
-            let newLength = formattedValue.length;
-            cursorPosition = cursorPosition + (newLength - originalLength);
-            this.setSelectionRange(cursorPosition, cursorPosition);
+            let val = this.value.replace(/[^0-9]/g, '');
+            if(val) this.value = Number(val).toLocaleString('en-US');
         });
 
+        // ฟังก์ชันส่งฟอร์มไปที่ Google Sheet
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             submitBtn.disabled = true;
             submitBtn.innerText = "กำลังบันทึกข้อมูล...";
 
             const formData = new URLSearchParams();
-            formData.append('fullName', document.getElementById('fullName').value.trim());
-            formData.append('nickname', document.getElementById('nickname').value.trim());
+            formData.append('fullName', document.getElementById('fullName').value);
+            formData.append('nickname', document.getElementById('nickname').value);
             formData.append('powerTeam', document.getElementById('powerTeam').value);
-            formData.append('goalAmount', getRawNumber(goalInput.value));
-            formData.append('lookingFor', document.getElementById('lookingFor').value.trim());
+            formData.append('goalAmount', goalInput.value.replace(/,/g, ''));
+            formData.append('lookingFor', document.getElementById('lookingFor').value);
 
-            fetch(SHEET_ENDPOINT, {
+            fetch(GAS_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: formData.toString()
-            })
-            .then(response => { 
-                successOverlay.classList.add('active'); 
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('เกิดข้อผิดพลาดในการเชื่อมต่อเครือข่าย กรุณาลองใหม่อีกครั้งครับ');
+            }).then(() => {
+                document.getElementById('successOverlay').classList.add('active');
+            }).catch(() => {
+                alert('เกิดข้อผิดพลาด กรุณาลองใหม่');
                 submitBtn.disabled = false;
                 submitBtn.innerText = "บันทึกข้อมูล";
             });
         });
 
-        function resetForm() {
-            form.reset();
-            submitBtn.disabled = false;
-            submitBtn.innerText = "บันทึกข้อมูล";
-            successOverlay.classList.remove('active');
+        // ฟังก์ชันแชร์ Flex Message
+        const flexMsg = { "type": "bubble", "size": "mega", "header": { "type": "box", "layout": "vertical", "contents": [ { "type": "box", "layout": "vertical", "contents": [ { "type": "filler" } ], "backgroundColor": "#9E1B22", "height": "6px" }, { "type": "text", "text": "BNI SUPREME", "color": "#9E1B22", "weight": "bold", "size": "3xl", "align": "center", "wrap": true, "margin": "lg" }, { "type": "text", "text": "GROWTH Connect Form", "color": "#6C757D", "size": "sm", "align": "center", "margin": "sm", "weight": "bold" } ], "paddingAll": "0px", "backgroundColor": "#FFFFFF", "paddingBottom": "15px" }, "hero": { "type": "image", "url": "https://bnisupremeth.com/wp-content/uploads/2026/04/BNI-Supreme-People-2.jpg", "size": "full", "aspectRatio": "20:13", "aspectMode": "cover" }, "body": { "type": "box", "layout": "vertical", "contents": [ { "type": "text", "text": "กรุณากรอกข้อมูลของท่าน เพื่อวางเป้าหมายของ Chapter และเป้าหมายธุรกิจของท่านร่วมกัน", "wrap": true, "color": "#495057", "size": "sm", "align": "center", "weight": "regular" } ], "paddingAll": "25px", "paddingTop": "20px" }, "footer": { "type": "box", "layout": "vertical", "contents": [ { "type": "button", "action": { "type": "uri", "label": "คลิกเพื่อกรอกข้อมูล", "uri": "https://liff.line.me/2010503081-el7huAKt" }, "style": "primary", "color": "#9E1B22", "height": "sm" }, { "type": "text", "text": "POWERED BY • BARIGAN", "size": "xxs", "color": "#ADB5BD", "align": "center", "margin": "lg", "weight": "bold" } ], "paddingAll": "25px", "paddingTop": "0px" }, "styles": { "header": { "separator": false }, "footer": { "separator": false } } };
+
+        function shareFlexMsg() {
+            if (liff.isApiAvailable('shareTargetPicker')) {
+                liff.shareTargetPicker([{ "type": "flex", "altText": "GROWTH Connect Form", "contents": flexMsg }])
+                    .then((res) => { if (res) alert('แชร์การ์ดสำเร็จครับ!'); })
+                    .catch((err) => console.error(err));
+            } else {
+                alert('กรุณาเปิดจากในแอป LINE เพื่อแชร์ครับ');
+            }
         }
     </script>
 </body>

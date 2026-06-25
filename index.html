@@ -32,9 +32,13 @@
         .powered-by { font-size: 16px; color: #495057; font-weight: 600; margin-bottom: 5px; }
         .brand-name { color: #9E1B22; }
         
-        /* ปุ่มแชร์สีเขียว */
-        .btn-share { width: 100%; background: #06C755; color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; transition: 0.2s; box-shadow: 0 4px 12px rgba(6, 199, 85, 0.2); }
-        .btn-share:hover { background: #05B34C; }
+        /* ปุ่มแชร์สีเขียว (ไซส์ใหญ่ สำหรับหน้า Success) */
+        .btn-share-large { width: 100%; background: #06C755; color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; transition: 0.2s; box-shadow: 0 4px 12px rgba(6, 199, 85, 0.2); }
+        .btn-share-large:hover { background: #05B34C; }
+
+        /* ปุ่มแชร์สีเขียว (ไซส์เล็ก สำหรับหน้าแรกใต้ Footer) */
+        .btn-share-small { width: fit-content; background: #06C755; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; margin: 15px auto 0; transition: 0.2s; box-shadow: 0 4px 12px rgba(6, 199, 85, 0.2); }
+        .btn-share-small:hover { background: #05B34C; }
         
         /* หน้า Success */
         .success-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #FFFFFF; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 10; padding: 20px; text-align: center; }
@@ -49,13 +53,15 @@
     <div class="container">
         <div class="form-card">
             
+            <!-- หน้าต่างเวลาบันทึกสำเร็จ -->
             <div class="success-overlay" id="successOverlay">
                 <div class="success-icon">✓</div>
                 <h2>บันทึกข้อมูลสำเร็จ</h2>
                 <p style="color: #6C757D; margin: 15px 0;">ขอบคุณครับ ข้อมูลเป้าหมายของคุณถูกบันทึกเรียบร้อยแล้ว</p>
                 
+                <!-- ปุ่มแชร์ไซส์ใหญ่ในหน้า Success -->
                 <div style="width: 100%; max-width: 250px;">
-                    <button type="button" class="btn-share" onclick="shareFlexMsg()">
+                    <button type="button" class="btn-share-large" onclick="shareFlexMsg()">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
                         ส่งต่อการ์ดเชิญ (Flex)
                     </button>
@@ -72,11 +78,11 @@
             <form id="bniGrowthForm">
                 <div class="form-group">
                     <label>ชื่อ-นามสกุล ภาษาอังกฤษ <span>*</span></label>
-                    <input type="text" id="fullName" name="fullName" placeholder="Somchai Jaidee" required pattern="^[A-Za-z ]+$" title="กรุณากรอกเฉพาะภาษาอังกฤษเท่านั้น">
+                    <input type="text" id="fullName" name="fullName" required>
                 </div>
                 <div class="form-group">
                     <label>ชื่อเล่น <span>*</span></label>
-                    <input type="text" id="nickname" name="nickname" placeholder="เช่น แก๊ส" required>
+                    <input type="text" id="nickname" name="nickname" required>
                 </div>
                 <div class="form-group">
                     <label>Power Team ปัจจุบัน <span>*</span></label>
@@ -94,15 +100,15 @@
                     </select>
                 </div>
                 <div class="form-group">
-                   <label for="goalAmount">ยอดธุรกิจที่ต้องการใน Supreme (Goal) <span>*</span></label>
+                    <label>ยอดธุรกิจที่ต้องการใน Supreme (Goal) <span>*</span></label>
                     <div class="input-wrapper goal-wrapper">
-                        <input type="text" id="goalAmount" name="goalAmount" placeholder="เช่น 1,000,000" required>
+                        <input type="text" id="goalAmount" name="goalAmount" required>
                         <span class="currency-suffix">THB</span>
                     </div>
                 </div>
                 <div class="form-group">
-                     <label for="lookingFor">Looking for / ลูกค้าที่ได้ยอดมากที่สุด <span>*</span></label>
-                    <input type="text" id="lookingFor" name="lookingFor" placeholder="เช่น Fulfillment คลังสินค้า" required>
+                    <label>Looking for / ลูกค้าที่ได้ยอดมากที่สุด <span>*</span></label>
+                    <input type="text" id="lookingFor" name="lookingFor" required>
                 </div>
                 <button type="submit" class="btn-submit" id="submitBtn">บันทึกข้อมูล</button>
             </form>
@@ -111,9 +117,10 @@
                 <div class="powered-by">POWERED BY · <span class="brand-name">BARIGAN</span></div>
             </footer>
 
-            <button type="button" class="btn-share" onclick="shareFlexMsg()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-                ส่งต่อการ์ดเชิญให้เพื่อน (Flex)
+            <!-- ปุ่มแชร์หน้าแรก (ปรับขนาดเล็กแล้ว) -->
+            <button type="button" class="btn-share-small" onclick="shareFlexMsg()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                ส่งต่อการ์ดเชิญ (Flex)
             </button>
 
         </div>
@@ -129,7 +136,6 @@
 
         async function initLiff() {
             await liff.init({ liffId: LIFF_ID });
-            // แก้บัคหน้าจอขาว: จะล็อกอินก็ต่อเมื่อไม่ได้เปิดในแอป LINE เท่านั้น
             if (!liff.isInClient() && !liff.isLoggedIn()) { 
                 liff.login(); 
             }
